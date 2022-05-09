@@ -33,3 +33,7 @@ DELETE /api/doctors/:appointmentId
 
 POST /api/doctors/:doctorId
 ```
+## **Notes**
+
+DB UML in extra repository. Further development would consider an SQL oriented db given predefined and redundant data types. An additional table that could be introduced is a patient_table. A future consideration could be the possibility of patients being associated with more than one doctors.
+
