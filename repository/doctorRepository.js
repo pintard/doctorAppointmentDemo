@@ -57,7 +57,7 @@ const deleteAppointmentById = async (appointmentId) =>
 const addAppointmentByDoctorId = async (doctorId, { name, time, kind }) => {
     const [year, month, day, hours, minutes] = time.split("-")
     const err = { err: "Meeting not within 15 min interval" }
-    if (minutes % 15 !== 0) return err
+    if (Number(minutes) % 15 !== 0) return err
     const totalAppts = appointments.reduce((prev, curr) => curr.doctorId === Number(doctorId) ? prev + 1 : prev, 0)
     if (totalAppts >= 3) return err
     else {
