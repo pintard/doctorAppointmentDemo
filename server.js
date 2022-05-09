@@ -29,5 +29,5 @@ app.route('/api/doctors/:doctorId')
     .post(async (req, res) => res.send(await addAppointmentByDoctorId(req.params['doctorId'], req.body)))
 
 app.listen(port, error => error ?
-    console.log("\x1b[31mERROR:\x1b[0m", error) :
+    console.log('\x1b[31mERROR:\x1b[0m', error) :
     console.log(`\x1b[35mConnected to \x1b[36mport: ${port}\x1b[0m`))

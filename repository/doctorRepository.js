@@ -1,47 +1,12 @@
-const doctors = [
-    {
-        id: 1,
-        firstName: "Curtis",
-        lastName: "Fred"
-    },
-    {
-        id: 2,
-        firstName: "Joann",
-        lastName: "Mabel"
-    }
-]
-
-const appointments = [
-    {
-        id: 1,
-        doctorId: 1,
-        firstName: "Melly",
-        lastName: "Jake",
-        date: new Date(2022, 11, 31),
-        time: "8:15",
-        kind: "New Patient"
-    },
-    {
-        id: 2,
-        doctorId: 2,
-        firstName: "Mia",
-        lastName: "Freddy",
-        date: new Date(2022, 11, 31),
-        time: "8:15",
-        kind: "Follow-up"
-    }
-]
+const { doctors, appointments } = require('./db')
 
 const getDoctors = async () => doctors
 
 /** Day must be supplied as "YYYY-MM-DD" where MM is an integer 0-11 */
-const getDoctorAppointmentsByDay = async (doctorId, day) => {
-    const dateString = new Date(...day.split("-")).toString()
-    return appointments.filter(el => (el.doctorId === Number(doctorId)) && (el.date.toString() === dateString))
-}
+const getDoctorAppointmentsByDay = async (doctorId, day) => appointments.filter(el =>
+    (el.doctorId === Number(doctorId)) && (el.date.toString() === new Date(...day.split('-')).toString()))
 
-const deleteAppointmentById = async (appointmentId) =>
-    appointments.filter(el => el.id !== Number(appointmentId))
+const deleteAppointmentById = async (appointmentId) => appointments.filter(el => el.id !== Number(appointmentId))
 
 /**
  * New appointments can only start at 15 minute intervals
@@ -55,24 +20,24 @@ const deleteAppointmentById = async (appointmentId) =>
  * date and time must be supplied as "YYYY-MM-DD-HH-mm" where MM is an integer 0-11
  */
 const addAppointmentByDoctorId = async (doctorId, { name, time, kind }) => {
-    const [year, month, day, hours, minutes] = time.split("-")
-    const err = { err: "Meeting not within 15 min interval" }
+    const [year, month, day, hours, minutes] = time.split('-')
+    const err = { err: 'Meeting not within 15 min interval' }
     if (Number(minutes) % 15 !== 0) return err
     const totalAppts = appointments.reduce((prev, curr) => curr.doctorId === Number(doctorId) ? prev + 1 : prev, 0)
     if (totalAppts >= 3) return err
     else {
-        const [firstName, lastName] = name.split(" ")
+        const [firstName, lastName] = name.split(' ')
         const appointment = {
             id: appointments.length + 1,
             doctorId: doctorId,
             firstName: firstName,
             lastName: lastName,
             date: new Date(year, month, day),
-            time: [hours, minutes].join(":"),
+            time: [hours, minutes].join(':'),
             kind: kind
         }
         appointments.push(appointment)
-        return { succ: "Meeting successfully created", appts: appointments }
+        return { succ: 'Meeting successfully created', appts: appointments }
     }
 }
 
