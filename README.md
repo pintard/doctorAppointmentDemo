@@ -22,7 +22,7 @@ Then run it using,
 npm run dev
 ```
 
-Interact with API endpoints using an HTTP tool like Postman
+Interact with API endpoints using an HTTP tool like Postman. All date related parameters are "-" separated values following `YYYY-MM-DD-HH-mm`
 
 ```txt
 GET /api/doctors
