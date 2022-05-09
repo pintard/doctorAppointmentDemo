@@ -24,8 +24,9 @@ const appointments = [
 
 const getDoctors = async () => doctors
 
+/** Day must be supplied as "YYYY-MM-DD" where MM is an integer 0-11 */
 const getDoctorAppointmentsByDay = async (doctorId, day) =>
-    appointments.map(el => el.doctorId === doctorId && el.day === day)
+    appointments.map(el => el.doctorId === doctorId && el.date === new Date(...day.split("-")))
 
 const deleteAppointmentById = async (appointmentId) =>
     appointments.filter(el => el.id !== appointmentId)
